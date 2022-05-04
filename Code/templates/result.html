@@ -1,0 +1,43 @@
+{% for result in search_results %}
+<h1 id="className">{{result["name"]}}</h1>
+<p id="prereq"> PreRequests</p> 
+
+
+<table id="class">
+  <tr>
+<!--  <th> Add to Plan</th> -->
+    <th>Select</th>
+    <th>Section</th>
+    <th>Code</th>
+    <th>Day</th>
+    <th>Time</th>
+    <th>Professor</th>
+   
+  </tr>
+
+
+
+{% for section in result["sections"]%}
+  <tr> <!-- every row -->
+  	<td>
+  		<label class="container">
+  <input type="checkbox" >
+  <span class="checkmark"></span>
+</label>
+  	</td>
+
+    <td>{{section["code"]}}</td>
+    <td>{{section["registrationNumber"]}}</td>
+    <td>9:00-10:15 AM</td>
+    <td>9:00-10:15 AM</td>
+    <td>{%for inst in section["instructors"]%} {{inst}}{% endfor %}</td>
+    <!-- <td><input type="checkbox" ></td> -->
+  </tr>
+  <tr>
+  	<!-- <td><input type="checkbox" style="text-align:center;" ng-model="x.dedbuffer"></td> -->
+    <td> 		<label class="container">
+
+{%endfor%}
+
+</table>
+{%endfor%}
