@@ -3,7 +3,6 @@ import requests
 from datetime import datetime, timedelta
 import calendar
 
-# import ratemyprofessor
 
 base_url = "https://schedge.a1liu.com/"
 semester = "sp"
@@ -24,12 +23,13 @@ def subject_search(year,semester,school,subject):
 def get_a_section(year,semester,classID):
     return requests.get("https://schedge.a1liu.com/"+year+"/"+semester+"/"+classID+"/").json()
 
+# utility functions to deal with meeting patterns
 def getMeetingDays(section):
     res = ""
     if section["meetings"]:
         for m in section['meetings']:
             date_time_str = m['beginDate']
-            date_time_obj = datetime.strptime(date_time_str, '%Y-%d-%m %H:%M:%S')
+            date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
             res += date_time_obj.strftime('%A') + " "
         return res
     return "TBD"
@@ -38,7 +38,7 @@ def getMeetingTimes(section):
     if section["meetings"]:
         for m in section['meetings']:
             date_time_str = m['beginDate']
-            date_time_obj = datetime.strptime(date_time_str, '%Y-%d-%m %H:%M:%S')
+            date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
             init_time = date_time_obj.time()
             final_time = date_time_obj + timedelta(minutes= m['minutesDuration'])
         time = init_time.strftime("%H:%M") +"-"+ final_time.strftime("%H:%M")

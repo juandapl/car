@@ -7,6 +7,12 @@ class Course:
         self.professor = professor
         self.location = location
         self.semester = semester
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "courseID": self.course_id
+        }
+
 
 class Term:
     def __init__(self, semester, location="Abu Dhabi"):
@@ -14,6 +20,13 @@ class Term:
         self.credits = 0
         self.location = location
         self.semester = semester
+
+    def as_dict(self):
+        return {
+            "courses": [v.as_dict() for v in self.courses],
+            "semester": self.semester
+        }
+
     def addCourse(self, Course):
         if not self.credits + Course.credits > 20 and (self.semester[0:2] == "fa" or self.semester[0:2] == "sp"):
             self.courses.append(Course)
@@ -32,7 +45,7 @@ class FourYearPlan:
         self.terms = []
         self.degreesPursuing = []
         self.startYear = startYear
-        semesters = ["ja," "sp", "su", "fa"]
+        semesters = ["ja", "sp", "su", "fa"]
         #append first fall
         self.terms.append(Term(("fa"+str(startYear))))
         for i in range(1,4):
@@ -66,3 +79,4 @@ class Requirement(Degree):
     def __init__(self, name, course_id):
         super(self, name)
         self.course_id = course_id
+

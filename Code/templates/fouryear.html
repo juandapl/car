@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="style.css"/> 
-   <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/> 
+   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"/> 
 
 </head>
 <body>
@@ -16,19 +16,41 @@
 	2. Input your previous courses </br>
 3. Click the generate button </br>
 </p>
-<button  id="gen"> Generate </button>
 
-
-<!-- <p id="f1"> Generate <span id="link1">Automatic</span> Four-Year Plan </p>
-<p id="explain"> A plan generated for you based on your progress so far</p>
-
-<p id="f2"> <span id="link2">Maunually</span> Input Four-Year Plan </p>
-<p id="explain2"> Create your own plan</p> -->
-<button  id="back"> back </button>
 
 <!-- table: request using ajax - template on plan.html -->
-<div id="plan"></div>
+<div id="plan">
+  {% for i in range(4) %}
+<table id="table2" style="width:100%">
+    <tr id="tr2">
+        <p id="t">Year {{i+1}}</p>
+      <th id="th2"></th>
+      <th id="th2"></th>
+      <th id="th2"></th>
+      <th id="th2"></th>
+    </tr>
+    
+    <tr id="tr2">
+      {%for course in terms[(i*4)]['courses']%}
+      <td id="td2Fall"><button id="tempButton">{{course['course_id']}} {{course['name']}}</button></td>
+      {%endfor%}
+    </tr>
+    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%} {{course['course_id']}} {{course['name']}} {%endfor%}</th>
+    
+    <tr id="tr2">
+      {%for course in terms[(i*4+2)]['courses']%}
+    <td id="td2"><button id="tempButtonS">{{course['course_id']}} {{course['name']}}</button></td>
+      {%endfor%}
 
+    </tr>
+  
+  </table>
+  {%endfor%}
+</div>
+
+<button  id="gen"> Generate </button>
+
+<button  id="back"> back </button>  
 
  <script src="{{url_for('static', filename = 'js/script.js')}}"> </script>
 

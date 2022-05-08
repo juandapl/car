@@ -10,10 +10,14 @@ from secret import *
 import pyrebase
 
 app = Flask(__name__)
+app.secret_key = secret_key
+
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 auth = firebase.auth()
 db = firebase.database()
+
+fyp = FourYearPlan("2020")
 
 @app.route("/")
 def initialise():
@@ -45,6 +49,7 @@ def courseSearch():
     departments = (v["name"] for v in abu_dhabi_subjects.values())
     return render_template("courseSearch.html", all_departments = departments)
 
+# retrieves ajax call from search.js - serves an html of results
 @app.route("/coursesearchresults", methods = ['POST', 'GET'])
 def serveResults():
     if request.method == "POST":
@@ -54,6 +59,8 @@ def serveResults():
         subject_code = list(abu_dhabi_subjects.keys())[position]
         search_results =  subject_search(apiArguments["year"], apiArguments["sem"], "UH", subject_code)
         print("search done")
+
+        # prepares meeting dates and times in a displayable format
         dateTimes = {}
         for result in search_results:
             for s in result['sections']:
@@ -61,28 +68,21 @@ def serveResults():
                 times = getMeetingTimes(dict(s))
                 dateTimes[s['registrationNumber']] = {"days" : days, "times" : times}
 
-
-        # courseList = (subject["name"] for subject in search_results)
         return render_template("result.html", search_results = search_results, dateTimes = dateTimes)
 
+# retrieves ajax call from addtoplan.js, returns success if successful, returns failure if trying to add a class after credit overload
 @app.route("/addCourse", methods=["GET", "POST"])
 def addCourse():
     if request.method == "POST":
         form = request.form
         newCourse = get_a_section(form['year'],form['sem'],form['reg'])
-        if session['fyp'].addCourse(Course(newCourse["name"], form['reg'], newCourse["code"], [v for v in newCourse["instructors"]], newCourse["location"], form["sem"]+form["year"])) == "success":
+        if fyp.addCourse(Course(newCourse["name"], form['reg'], newCourse["code"], [v for v in newCourse["instructors"]], newCourse["location"], form["sem"]+form["year"])) == "success":
             return "success"
         return "failure"
 
-@app.route("/getFourYearPlan", methods=["GET", "POST"])
-def showPlan():
-    return render_template("boxes.html", fyp = session['fyp'])
-
 @app.route("/fyp")
-def fyp():
-    if not session['fyp']:
-        session['fyp'] = FourYearPlan()
-    return render_template("fouryear.html")
+def fouryearplanpage():
+    return render_template("fouryear.html", terms = [v.as_dict() for v in fyp.terms])
 
 @app.route("/generatefyp")
 def generatefyp():
