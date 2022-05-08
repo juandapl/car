@@ -1,5 +1,3 @@
-from tracemalloc import start
-
 
 class Course:
     def __init__(self, name, course_id, section, professor, location, semester):

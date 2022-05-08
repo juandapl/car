@@ -6,21 +6,36 @@ import requests
 from urllib.parse import quote
 from apicalls import *
 from objects import *
+from secret import *
+import pyrebase
 
 app = Flask(__name__)
 
-# change secret key
-app.secret_key = 'BAD_SECRET_KEY'
+firebase = pyrebase.initialize_app(firebaseConfig)
+auth = firebase.auth()
+db = firebase.database()
 
 @app.route("/")
 def initialise():
-    if not session['user']:
-        return redirect("/login")
-    if not session['fyp']:
-        session['fyp'] = FourYearPlan()
-    return render_template("index.html")
+    try:
+        if session['user']:
+            return redirect('/main')
+    except:
+        pass
+    return render_template("loginpage.html")
 
-@app.route("/index")
+@app.route("/login", methods = ['GET', 'POST'])
+def login():
+    email = request.form["email"]
+    password = request.form['password']
+    try:
+        user = auth.sign_in_with_email_and_password(email,password)
+        session['user'] = user['idToken']
+    except:
+        return redirect("/")
+    return redirect("/main")
+
+@app.route("/main")
 def index():
     return render_template("main.html")
 
@@ -65,6 +80,8 @@ def showPlan():
 
 @app.route("/fyp")
 def fyp():
+    if not session['fyp']:
+        session['fyp'] = FourYearPlan()
     return render_template("fouryear.html")
 
 @app.route("/generatefyp")
