@@ -11,8 +11,13 @@
 	<a id="none" href="main.html"><h2> NYU ABU DHABI </h2> </a>
 </div>
 <!-- Table -->
-<h2>Major 1</h2>
 
+
+<label id="nmn" for="query">New Major Name</label>
+<input id="newMajorName">
+<button id="addMajor" id="submit">Add Major</button>
+
+{% for major in majors %}
 <table id="adminTable">
   <tr id="adminHeading">
     <th id="th4">Computer Science</th>
@@ -27,6 +32,8 @@
     <td id="td41"><button id="editcourse">Edit</button></td>
   </tr>
 </table>
+
+{%endfor%}
 
 
 

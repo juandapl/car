@@ -17,8 +17,6 @@
 <div id="form">
 <label id="try1" for="year">Year</label>
             <select id="year">
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
@@ -37,8 +35,7 @@
                     <option>{{department}}</option>
                 {% endfor %}
             </datalist>
-            <label id="try4" for="query">Keywords</label>
-            <input id="query">
+            
             <button id="try5" id="submit">Submit</button>
         </div>
 
@@ -49,6 +46,7 @@
 
 
 <script src="{{url_for('static', filename='js/search.js')}}"></script>
+<script src="{{url_for('static', filename='js/addtoplan.js')}}"></script>
 <!-- <script src="script.js"></script> -->
 </body>
 </html>
