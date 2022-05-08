@@ -1,5 +1,5 @@
 
-$('#submit').click(function()
+$('#try5').click(function()
 {
     var formData = {
         year: $("#year").val(),
@@ -7,7 +7,6 @@ $('#submit').click(function()
         department: $("#department").val(),
         query: $("#query").val(),
       };
-      console.log(formData)
       $.post("/coursesearchresults", formData, function(data)
       {
           $("#search_results").html(data)

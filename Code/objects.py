@@ -2,7 +2,8 @@ from tracemalloc import start
 
 
 class Course:
-    def __init__(self, course_id, section, professor, location, semester):
+    def __init__(self, name, course_id, section, professor, location, semester):
+        self.name = name
         self.course_id = course_id
         self.section = section
         self.professor = professor

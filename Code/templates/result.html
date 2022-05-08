@@ -1,7 +1,6 @@
 {% for result in search_results %}
-<h1 id="className">{{result["name"]}}</h1>
+<h1 id="className">{{result['subjectCode']['code']}}-{{result['subjectCode']['school']}} {{result['deptCourseId']}} {{result["name"]}}</h1>
 <p id="prereq"> PreRequests</p> 
-
 
 <table id="class">
   <tr>
@@ -20,22 +19,16 @@
 {% for section in result["sections"]%}
   <tr> <!-- every row -->
   	<td>
-  		<label class="container">
-  <input type="checkbox" >
-  <span class="checkmark"></span>
-</label>
+      <button id="add">Add to Plan</button>
   	</td>
 
     <td>{{section["code"]}}</td>
-    <td>{{section["registrationNumber"]}}</td>
-    <td>9:00-10:15 AM</td>
-    <td>9:00-10:15 AM</td>
+    <td id="reg">{{section["registrationNumber"]}}</td>
+    <td>{{dateTimes[section['registrationNumber']]['days']}}</td>
+    <td>{{dateTimes[section['registrationNumber']]['times']}}</td>
     <td>{%for inst in section["instructors"]%} {{inst}}{% endfor %}</td>
     <!-- <td><input type="checkbox" ></td> -->
   </tr>
-  <tr>
-  	<!-- <td><input type="checkbox" style="text-align:center;" ng-model="x.dedbuffer"></td> -->
-    <td> 		<label class="container">
 
 {%endfor%}
 

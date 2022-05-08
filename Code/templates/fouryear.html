@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="style.css"/> 
+   <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/> 
 
 </head>
 <body>
@@ -17,106 +18,11 @@
 <p id="explain2"> Create your own plan</p>
 <button  id="back"> back </button>
 
-<!-- Table -->
-<table id="table2" style="width:100%">
-  <tr id="tr2">
-  	<p id="t">Year 1</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
-  
-  <tr id="tr2">
-    <td id="td2Fall">Class1</td>
-    <td id="td2Fall">Class2</td>
-    <td id="td2Fall">Class3</td>
-    <td id="td2Fall">Class4</td>
-  </tr>
-  <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2">Class5</td>
-    <td id="td2">Class6</td>
-    <td id="td2">Class7</td>
-    <td id="td2">Class8</td>
-  </tr>
-
-</table>
-<table id="table2" style="width:100%">
-  <tr id="tr2">
-  	<p id="t">Year 2</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
-  
-  <tr id="tr2">
-    <td id="td2Fall">Class1</td>
-    <td id="td2Fall">Class2</td>
-    <td id="td2Fall">Class3</td>
-    <td id="td2Fall">Class4</td>
-  </tr>
-  <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2">Class5</td>
-    <td id="td2">Class6</td>
-    <td id="td2">Class7</td>
-    <td id="td2">Class8</td>
-  </tr>
-  
-</table>
-<table id="table2" style="width:100%">
-  <tr id="tr2">
-  	<p id="t">Year 3</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
- 
-  <tr id="tr2">
-    <td id="td2Fall">Class1</td>
-    <td id="td2Fall">Class2</td>
-    <td id="td2Fall">Class3</td>
-    <td id="td2Fall">Class4</td>
-  </tr>
-   <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2">Class5</td>
-    <td id="td2">Class6</td>
-    <td id="td2">Class7</td>
-    <td id="td2">Class8</td>
-  </tr>
-  
-</table>
-
-<table id="table2" style="width:100%">
-  <tr id="tr2">
-  	<p id="t">Year 4</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
-  <tr id="tr2">
-    <td id="td2Fall">Class1</td>
-    <td id="td2Fall">Class2</td>
-    <td id="td2Fall">Class3</td>
-    <td id="td2Fall">Class4</td>
-  </tr>
-  <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2">Class5</td>
-    <td id="td2">Class6</td>
-    <td id="td2">Class7</td>
-    <td id="td2">Class8</td>
-  </tr>
-  
-</table>
+<!-- table: request using ajax - template on plan.html -->
+<div id="plan"></div>
 
 
- <script src="script.js"> </script>
+ <script src="{{url_for('static', filename = 'js/script.js')}}"> </script>
 
 </body>
 </html>
