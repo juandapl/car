@@ -7,6 +7,28 @@ from urllib.parse import quote
 from apicalls import *
 from objects import *
 
+
+#firebase authentication
+import pyrebase
+
+firebaseConfig = {'apiKey': "AIzaSyAo0cMHeRTyfby4U3wgiesLi3Zd3w7AUkE",
+  'authDomain': "car-se.firebaseapp.com",
+  'databaseURL': "https://car-se-default-rtdb.firebaseio.com",
+  'projectId': "car-se",
+  'storageBucket': "car-se.appspot.com",
+  'messagingSenderId': "507983665956",
+  'appId': "1:507983665956:web:ae65fcf8220ebe14cd31b1",
+  'measurementId': "G-JHG5FT48TX"}
+
+firebase = pyrebase.initialize_app(firebaseConfig)
+auth = firebase.auth()
+
+#login on terminal
+email = input("Enter email address")
+password = input("Enter password")
+auth.sign_in_with_email_and_password(email,password)
+
+
 app = Flask(__name__)
 
 # change secret key
@@ -19,10 +41,6 @@ def initialise():
     if not session['fyp']:
         session['fyp'] = FourYearPlan()
     return render_template("index.html")
-
-@app.route("/index")
-def index():
-    return render_template("main.html")
 
 @app.route("/search")
 def courseSearch():
@@ -38,35 +56,14 @@ def serveResults():
         position = departments.index(apiArguments["department"])
         subject_code = list(abu_dhabi_subjects.keys())[position]
         search_results =  subject_search(apiArguments["year"], apiArguments["sem"], "UH", subject_code)
-        print("search done")
-        dateTimes = {}
-        for result in search_results:
-            for s in result['sections']:
-                days = getMeetingDays(dict(s))
-                times = getMeetingTimes(dict(s))
-                dateTimes[s['registrationNumber']] = {"days" : days, "times" : times}
-
-
+        print(search_results, subject_code)
         # courseList = (subject["name"] for subject in search_results)
-        return render_template("result.html", search_results = search_results, dateTimes = dateTimes)
+        return render_template("result.html", search_results = search_results)
 
 @app.route("/addCourse", methods=["GET", "POST"])
 def addCourse():
     if request.method == "POST":
-        form = request.form
-        newCourse = get_a_section(form['year'],form['sem'],form['reg'])
-        if session['fyp'].addCourse(Course(newCourse["name"], form['reg'], newCourse["code"], [v for v in newCourse["instructors"]], newCourse["location"], form["sem"]+form["year"])) == "success":
+        newCourse = request.form
+        if session['fyp'].addCourse(Course(newCourse["course_id"], newCourse["section"], newCourse["professor"], newCourse["location"], newCourse["semester"])) == "success":
             return "success"
         return "failure"
-
-@app.route("/getFourYearPlan", methods=["GET", "POST"])
-def showPlan():
-    return render_template("boxes.html", fyp = session['fyp'])
-
-@app.route("/fyp")
-def fyp():
-    return render_template("fouryear.html")
-
-@app.route("/generatefyp")
-def generatefyp():
-    return render_template("fypreport.html", fyp = session['fyp'])
