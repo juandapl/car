@@ -274,7 +274,7 @@ background-color: #af71ef;
 #try4{
 	margin-left:2%;
 }
-#try5{
+#try5, #add{
 	margin-left:2%;
 }
 #form{
@@ -342,6 +342,6 @@ select{
   touch-action: manipulation;
 }
 
-#try5:hover {
+#try5:hover, #add:hover {
   box-shadow: #330662 0 0 0 3px, transparent 0 0 0 0;
 }

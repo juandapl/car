@@ -6,5 +6,5 @@ $('#add').click(function()
         year: $("#year").val(),
         sem: $("#sem").val()
     }
-    $.post("/addCourse", formData)
+    $.post("/addCourse", request)
 })

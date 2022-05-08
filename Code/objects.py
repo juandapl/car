@@ -17,7 +17,11 @@ class Term:
         self.location = location
         self.semester = semester
     def addCourse(self, Course):
-        if not self.credits + Course.credits > 20:
+        if not self.credits + Course.credits > 20 and (self.semester[0:2] == "fa" or self.semester[0:2] == "sp"):
+            self.courses.append(Course)
+            self.credits += Course.credits
+            return "success"
+        if not self.credits + Course.credits > 4 and (self.semester[0:2] == "ja" or self.semester[0:2] == "su"):
             self.courses.append(Course)
             self.credits += Course.credits
             return "success"
@@ -56,7 +60,7 @@ class Student:
 class Degree:
     def __init__(self, name):
         self.name = name
-        self.requirements = []
+        self.requirements = ["CDAD", "CSTS", "CCEA", "CADT", "CCOL", "CCOL"]
     def addRequirement(self, requirement):
         self.requirements.append(requirement)
 
