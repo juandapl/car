@@ -1,10 +1,19 @@
-$('#add').click(function()
+function addCourse(thing)
 {
-    var regNumber = $(this).parent().parent().find("#reg").val()
+    console.log("click")
+    var regNumber = thing.parentElement.parentElement.querySelector("#reg").textContent
+    
     var request = {
         reg: regNumber,
         year: $("#year").val(),
         sem: $("#sem").val()
+
+
     }
-    $.post("/addCourse", request)
-})
+        console.log(request)
+    $.post("/addCourse", request, function(data)
+    {
+        console.log(data)
+    }
+    )
+}   

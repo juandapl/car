@@ -32,14 +32,14 @@
     
     <tr id="tr2">
       {%for course in terms[(i*4)]['courses']%}
-      <td id="td2Fall"><button id="tempButton">{{course['course_id']}} {{course['name']}}</button></td>
+      <td id="td2Fall"><button id="tempButton">{{course['courseID']}} {{course['name']}}</button></td>
       {%endfor%}
     </tr>
-    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%} {{course['course_id']}} {{course['name']}} {%endfor%}</th>
+    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%} {{course['courseID']}} {{course['name']}} {%endfor%}</th>
     
     <tr id="tr2">
       {%for course in terms[(i*4+2)]['courses']%}
-    <td id="td2"><button id="tempButtonS">{{course['course_id']}} {{course['name']}}</button></td>
+    <td id="td2"><button id="tempButtonS">{{course['courseID']}} {{course['name']}}</button></td>
       {%endfor%}
 
     </tr>

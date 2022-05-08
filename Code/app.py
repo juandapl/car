@@ -59,7 +59,6 @@ def serveResults():
         subject_code = list(abu_dhabi_subjects.keys())[position]
         search_results =  subject_search(apiArguments["year"], apiArguments["sem"], "UH", subject_code)
         print("search done")
-
         # prepares meeting dates and times in a displayable format
         dateTimes = {}
         for result in search_results:
@@ -76,7 +75,9 @@ def addCourse():
     if request.method == "POST":
         form = request.form
         newCourse = get_a_section(form['year'],form['sem'],form['reg'])
-        if fyp.addCourse(Course(newCourse["name"], form['reg'], newCourse["code"], [v for v in newCourse["instructors"]], newCourse["location"], form["sem"]+form["year"])) == "success":
+        course_id = get_course_id_from_course_name(form['year'],form['sem'], "UH", newCourse["name"])
+        print(course_id)
+        if fyp.addCourse(Course(newCourse["name"], course_id, form['reg'], newCourse["code"], [v for v in newCourse["instructors"]], newCourse["location"], form["sem"]+form["year"])) == "success":
             return "success"
         return "failure"
 

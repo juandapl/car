@@ -23,6 +23,17 @@ def subject_search(year,semester,school,subject):
 def get_a_section(year,semester,classID):
     return requests.get("https://schedge.a1liu.com/"+year+"/"+semester+"/"+classID+"/").json()
 
+def get_course_id_from_course_name(year,semester, school, name):
+    query = {
+        'query' : name,
+        'school' : school,
+    }
+    results = requests.get("https://schedge.a1liu.com/"+year+"/"+semester+"/search/", params=query).json()
+    newCourse = results[0]
+    ret = newCourse['subjectCode']['code']+"-"+newCourse['subjectCode']['school']+" "+newCourse["deptCourseId"]
+    print(ret)
+    return ret
+
 # utility functions to deal with meeting patterns
 def getMeetingDays(section):
     res = ""

@@ -1,12 +1,14 @@
 
 class Course:
-    def __init__(self, name, course_id, section, professor, location, semester):
+    def __init__(self, name, course_id, reg_number, section, professor, location, semester):
         self.name = name
         self.course_id = course_id
+        self.reg_number = reg_number
         self.section = section
         self.professor = professor
         self.location = location
         self.semester = semester
+        self.credits = 4
     def as_dict(self):
         return {
             "name": self.name,

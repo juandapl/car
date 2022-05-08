@@ -19,7 +19,7 @@
 {% for section in result["sections"]%}
   <tr> <!-- every row -->
   	<td>
-      <button id="add">Add to Plan</button>
+      <button id="add" onclick="addCourse(this)">Add to Plan</button>
   	</td>
 
     <td>{{section["code"]}}</td>

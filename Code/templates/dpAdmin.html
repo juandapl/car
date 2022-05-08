@@ -13,7 +13,7 @@
 <!-- Table -->
 
 
-<label id="nmn" for="query">New Major Name</label>
+<label id="nmn" for="newMajorName">New Major Name</label>
 <input id="newMajorName">
 <button id="addMajor" id="submit">Add Major</button>
 
@@ -21,16 +21,19 @@
 <table id="adminTable">
   <tr id="adminHeading">
     <th id="th4">Computer Science</th>
-    <th id="th41">Edit</th>
+    <th id="th41">
+      <label id="nrn" for="newRequirement">Requirement Name</label>
+      <input id="newRequirement">
+      <button id="addRequirement" id="submit">Add Requirement</button>
+    </th>
   </tr>
+
+  {%for req in major['requirements'] %}
   <tr id="adminContent">
     <td id="td4">Req 1</td>
     <td id="td41"><button id="editcourse">Edit</button></td>
   </tr>
-  <tr id="adminContent">
-    <td id="td4">Req 2</td>
-    <td id="td41"><button id="editcourse">Edit</button></td>
-  </tr>
+  
 </table>
 
 {%endfor%}
