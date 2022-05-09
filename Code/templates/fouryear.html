@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="style.css"/> 
+   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"/> 
+
+</head>
+<body>
+<div id="banner">
+	<a id="none" href="main.html"><h2> NYU ABU DHABI </h2> </a>
+</div>
+<p id="f1"> To generate a Four-year plan: </p>
+	<p id="inst">1. Input your major/minor </br>
+	2. Input your previous courses </br>
+3. Click the generate button </br>
+</p>
+<button  id="gen"> Generate </button>
+
+<!-- table: request using ajax - template on plan.html -->
+<div id="plan">
+  {% for i in range(4) %}
+<table id="table2" style="width:100%">
+    <tr id="tr2">
+        <p id="t">Year {{i+1}}</p>
+      <th id="th2"></th>
+      <th id="th2"></th>
+      <th id="th2"></th>
+      <th id="th2"></th>
+    </tr>
+    
+    <tr id="tr2">
+      {%for course in terms[(i*4)]['courses']%}
+      <td id="td2Fall"><button id="tempButton">{{course['courseID']}} {{course['name']}}</button></td>
+      {%endfor%}
+    </tr>
+    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%} {{course['courseID']}} {{course['name']}} {%endfor%}</th>
+    
+    <tr id="tr2">
+      {%for course in terms[(i*4+2)]['courses']%}
+    <td id="td2"><button id="tempButtonS">{{course['courseID']}} {{course['name']}}</button></td>
+      {%endfor%}
+
+    </tr>
+  
+  </table>
+  {%endfor%}
+</div>
+
+
+<button  id="back"> back </button>  
+
+ <script src="{{url_for('static', filename = 'js/script.js')}}"> </script>
+
+</body>
+</html>
