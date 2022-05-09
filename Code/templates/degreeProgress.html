@@ -4,18 +4,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="style.css"/> 
+   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"/> 
    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
 <div id="banner">
 	<a id="none" href="main"><h2> NYU ABU DHABI </h2> </a>
 </div>
-<p id="progress"><span id="part1"> Are you on track to graduate?</span> </br><span id="under">Get </span> your Degree Progress Report</p>
+<p id="progress"><span id="part1"> Are you on track to graduate?</span> 
 
+  <p id="maj">Major: {{major}} </p>
+<p id="maj">Progress: {{r['percentage']}} </p>
+<ul id="majorReqList">List of Requirements
+  {%for req in r['required']%}
+  <li>{{req}}</li>
+  {%endfor%}
+</ul> 
+<div class="float-container">
+<ul id="DoneReqList">Requirements Done:
+  {%for req in r['done']%}
+  <li>{{req}}</li>
+  {%endfor%}
+</ul> 
 
-<div id="progreport">
-  
+<ul id="leftReqList">Requirements Left:
+  {%for req in r['left']%}
+  <li>{{req}}</li>
+  {%endfor%}
+</ul> 
 </div>
+
+ <script src="script.js"> </script>
+
+</body>
+</html>
 
 
 </body>
