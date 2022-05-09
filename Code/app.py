@@ -10,6 +10,7 @@ from secret import *
 import pyrebase
 from fypalgorithm import *
 from degreeprogressalgorithm import *
+import pickle
 
 app = Flask(__name__)
 app.secret_key = secret_key
@@ -26,15 +27,18 @@ current_major = "Undecided"
 
 print("Getting all subject data")
 
-# for s in abu_dhabi_subjects:    
-#     abu_dhabi_courses += get_all_subjects("2022","sp","UH",s)
+try:
+    with open('majors.pkl', 'rb') as f:
+        majors = pickle.load(f)
 
-# all_abu_dhabi_course_codes = []
-# for c in abu_dhabi_courses:
-#     all_abu_dhabi_course_codes.append(c['subjectCode']['code']+"-"+c['subjectCode']['school']+" "+c["deptCourseId"])
+    with open('fyp.pkl', 'rb') as f:
+        fyp = pickle.load(f)
 
+    with open('courses.pkl', 'rb') as f:
+        all_abu_dhabi_course_codes = pickle.load(f)
+except:
+    pass
 
-# print(all_abu_dhabi_course_codes)
 print("Initialisation done")
 
 
@@ -80,7 +84,10 @@ def serveResults():
         departments = [v["name"] for v in abu_dhabi_subjects.values()]
         position = departments.index(apiArguments["department"])
         subject_code = list(abu_dhabi_subjects.keys())[position]
-        search_results =  subject_search(apiArguments["year"], apiArguments["sem"], "UH", subject_code)
+        year = apiArguments["year"]
+        if int(year) > 2022:
+            year = ["2022"]
+        search_results =  subject_search(year, apiArguments["sem"], "UH", subject_code)
         print("search done")
         # prepares meeting dates and times in a displayable format
         dateTimes = {}
@@ -124,7 +131,7 @@ def fouryearplanpage():
 
 @app.route("/admin")
 def adminConsole():
-    return render_template("dpAdmin.html", majors = majors) #TODO add ad course codes
+    return render_template("dpAdmin.html", majors = majors, all_codes = all_abu_dhabi_course_codes) 
 
 @app.route("/addMajor", methods=["GET", "POST"])
 def addDegree():
@@ -137,8 +144,8 @@ def addDegree():
 def addReq():
     if request.method == "POST":
         name = request.form['name']
-        # if not name in all_abu_dhabi_course_codes:
-        #     return "fail." TODO
+        if not name in all_abu_dhabi_course_codes:
+            return "fail."
         major = request.form['major']
         for maj in majors:
             if maj.name == major:
@@ -164,8 +171,8 @@ def deleteReq():
 def addPR():
     if request.method == "POST":
         name = request.form['name']
-        # if not name in all_abu_dhabi_course_codes:
-        #     return "fail." TODO
+        if not name in all_abu_dhabi_course_codes:
+            return "fail."
         cl = request.form['class']
         major = request.form['major']
         for maj in majors:
@@ -202,3 +209,14 @@ def degreeProgress():
     for maj in majors:
         if maj.name == current_major:
             return render_template("degreeProgress.html", major = current_major, r = getDegreeProgress(fyp, maj))
+
+@app.route("/saveSystem")
+def saveAll():
+    with open('majors.pkl', 'wb') as f:
+        pickle.dump(majors, f)
+    with open('fyp.pkl', 'wb') as f:
+        pickle.dump(fyp, f)
+    with open('courses.pkl', 'wb') as f:
+        pickle.dump(all_abu_dhabi_course_codes, f)
+    print("saving done")
+    return render_template("dpAdmin.html", majors = majors)

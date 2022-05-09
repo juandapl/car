@@ -14,7 +14,7 @@
 <p id="progress"><span id="part1"> Are you on track to graduate?</span> 
 
   <p id="maj">Major: {{major}} </p>
-<p id="maj">Progress: {{r['percentage']}} </p>
+<p id="maj">Progress: {{'{:.2f}'.format(r['percentage'])}}% </p>
 <ul id="majorReqList">List of Requirements
   {%for req in r['required']%}
   <li>{{req}}</li>

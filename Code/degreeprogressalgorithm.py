@@ -8,6 +8,8 @@ def getDegreeProgress(fyp, deg):
 
     for term in fyp.terms:
         for course in term.courses:
+            if course.course_id[0:4] == "CCOL" or course.course_id[0:4] == "CSTS" or course.course_id[0:4] == "CDAD" or course.course_id[0:4] == "CCEA" or course.course_id[0:4] == "CADT" or course.course_id[0:4] == "WRIT":
+                allClassesTaken.append(course.course_id[0:4])
             allClassesTaken.append(course.course_id)
         if current_semester == term.semester:
             break
@@ -22,7 +24,7 @@ def getDegreeProgress(fyp, deg):
         else:
             left.append(req)
 
-    pct = (len(done)/len(left))*100
+    pct = (len(done)/len(allRequirements))*100
 
 
     return {

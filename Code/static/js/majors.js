@@ -60,7 +60,6 @@ function addPreReq(thing)
     )
 }
 
-//TODO
 
 function deleteReq(thing)
 {
