@@ -14,6 +14,7 @@ function addCourse(thing)
     $.post("/addCourse", request, function(data)
     {
         console.log(data)
+        location.assign('/fyp')
     }
     )
 }
@@ -21,7 +22,7 @@ function addCourse(thing)
 function removeCourse(thing)
 {
     console.log("click")
-    var regNumber = thing.parentElement.querySelector("#info").textContent
+    var regNumber = thing.parentElement.querySelector("#in").textContent
     
     var request = {
         reg: regNumber
@@ -34,3 +35,19 @@ function removeCourse(thing)
     }
     )
 }   
+
+function generate()
+{
+    console.log("click")
+
+    var request = {
+        text: "cmon do it"
+    }
+        console.log(request)
+    $.post("/generateFYP", request, function(data)
+    {
+        console.log(data)
+        location.reload()
+    }
+    )
+}

@@ -40,8 +40,10 @@
 
   {%for req in major['requirements'] %}
     <tr id="adminContent">
-      <td id="td4">{{req['name']}}</td>
+      <td id="td4" id="cour">{{req['name']}}</td>
       <td id="td41">
+        <button id="remove" id="submit" onclick="deleteReq(this)">Delete</button>
+        <br>
         <label id="nrn" for="newPreReq">Prerequisite Code</label>
         <input id="newPreReq" list="codes" placeholder="Start typing...">
         <button id="addRequirement" id="submit" onclick="addPreReq(this)">Add Prerequisite</button>
@@ -50,8 +52,10 @@
 
     {%for pre in req['prereqs']%}
       <tr id="adminContent">
-        <td id="td4">{{pre}}</td>
+        <td id="td4" id="pre">{{pre}}</td>
+        
         <td id="td41">
+          <button id="remove" id="submit" onclick="deletePreReq(this)">Delete</button><br>
         </td>
       </tr>
 

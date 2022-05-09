@@ -1,13 +1,15 @@
 import requests
 import base64
 import json
-from flask import Flask, request, redirect, g, render_template, session
+from flask import Flask, request, redirect, g, render_template, session, url_for
 import requests
 from urllib.parse import quote
 from apicalls import *
 from objects import *
 from secret import *
 import pyrebase
+from fypalgorithm import *
+from degreeprogressalgorithm import *
 
 app = Flask(__name__)
 app.secret_key = secret_key
@@ -18,8 +20,9 @@ auth = firebase.auth()
 db = firebase.database()
 
 fyp = FourYearPlan("2020")
-majors = []
+majors = [Degree("Undecided")]
 abu_dhabi_courses = []
+current_major = "Undecided"
 
 print("Getting all subject data")
 
@@ -35,8 +38,10 @@ print("Getting all subject data")
 print("Initialisation done")
 
 
+
 @app.route("/")
 def initialise():
+    session['name'] = "hi."
     try:
         if session['user']:
             return redirect('/main')
@@ -52,13 +57,14 @@ def login():
         try:
             user = auth.sign_in_with_email_and_password(email,password)
             session['user'] = user['idToken']
+            session['name'] = email
         except:
             return redirect("/")
         return redirect("/main")
 
 @app.route("/main")
 def index():
-    return render_template("main.html")
+    return render_template("main.html", currentMajor = current_major, majors = majors, name = session['name'])
 
 @app.route("/search")
 def courseSearch():
@@ -95,7 +101,7 @@ def addCourse():
         course_id = get_course_id_from_course_name(form['year'],form['sem'], "UH", newCourse["name"])
         print(course_id)
         if fyp.addCourse(Course(newCourse["name"], course_id, form['reg'], newCourse["code"], [v for v in newCourse["instructors"]], newCourse["location"], form["sem"]+form["year"])) == "success":
-            return "success"
+            return redirect("/fyp", code=302)
         return "failure"
 
 @app.route("/removeCourse", methods=["GET", "POST"])
@@ -110,14 +116,11 @@ def removeCourse():
                     term.credits -= 4
                     break
                 break
+        return "success"
 
 @app.route("/fyp")
 def fouryearplanpage():
     return render_template("fouryear.html", terms = [v.as_dict() for v in fyp.terms])
-
-@app.route("/generatefyp")
-def generatefyp():
-    return render_template("fypreport.html", fyp = session['fyp'])
 
 @app.route("/admin")
 def adminConsole():
@@ -143,6 +146,20 @@ def addReq():
                 break
         return "success"
 
+@app.route("/deleteReq", methods=["GET", "POST"])
+def deleteReq():
+    if request.method == "POST":
+        name = request.form['name']
+        major = request.form['major']
+        for maj in majors:
+            if maj.name == major:
+                for c in maj.requirements:
+                    if c.name == name:
+                        maj.requirements.remove(c)
+                        break
+                break
+        return "success"
+
 @app.route("/addPreReq", methods=["GET", "POST"])
 def addPR():
     if request.method == "POST":
@@ -159,3 +176,29 @@ def addPR():
                 break
         return "success"
 
+@app.route("/changeMajor", methods=["GET", "POST"])
+def changeMajor():
+    global current_major
+    if request.method == "POST":
+        newMajor = request.form['maj']
+        current_major = newMajor        
+        return "success"
+
+@app.route("/generateFYP", methods=["GET", "POST"])
+def generatePlan():
+    global fyp
+    for maj in majors:
+        if maj.name == current_major:
+            
+            fyp = generateFYP(fyp, maj)
+            for term in fyp.terms:
+                for course in term.courses:
+                    print(course.name)
+            break
+    return "success"
+
+@app.route("/degreeProgress")
+def degreeProgress():
+    for maj in majors:
+        if maj.name == current_major:
+            return render_template("degreeProgress.html", major = current_major, r = getDegreeProgress(fyp, maj))

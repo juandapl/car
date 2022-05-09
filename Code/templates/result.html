@@ -26,7 +26,7 @@
     <td id="reg">{{section["registrationNumber"]}}</td>
     <td>{{dateTimes[section['registrationNumber']]['days']}}</td>
     <td>{{dateTimes[section['registrationNumber']]['times']}}</td>
-    <td>{%for inst in section["instructors"]%} {{inst}}{% endfor %}</td>
+    <td>{%for inst in section["instructors"]%} {{inst}} <br> <a href="https://www.facebook.com/groups/154302261314403/search?q={{inst}}">Room of Requirement</a> <br>  {% endfor %}</td>
     <!-- <td><input type="checkbox" ></td> -->
   </tr>
 

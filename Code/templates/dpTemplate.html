@@ -6,141 +6,28 @@
    <link rel="stylesheet" href="style.css"/> 
       <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
-</head>
-<body>
 
 
-<p id="maj">Major: </p>
+<p id="maj">Major: {{major}} </p>
+<p id="maj">Progress: {{r['percentage']}} </p>
 <ul id="majorReqList">List of Requirements
-  <li>1</li>
-  <li>2</li>
-  <li>3</li>
-  <li>4</li>
+  {%for req in r['required']%}
+  <li>{{req}}</li>
+  {%endfor%}
 </ul> 
 <div class="float-container">
 <ul id="DoneReqList">Requirements Done:
-  <li>1</li>
-  <li>2</li>
-  <li>3</li>
-  <li>4</li>
+  {%for req in r['done']%}
+  <li>{{req}}</li>
+  {%endfor%}
 </ul> 
 
 <ul id="leftReqList">Requirements Left:
-  <li>1</li>
-  <li>2</li>
-  <li>3</li>
-  <li>4</li>
+  {%for req in r['left']%}
+  <li>{{req}}</li>
+  {%endfor%}
 </ul> 
 </div>
-<!-- Table -->
-<!-- <table id="table2" style="width:100%">
-  <tr id="tr2">
-    <p id="t">Year 1</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
-  
-  <tr id="tr2">
-   
-    <td id="td2Fall">
-      <button id="tempButton">Class1</button>
-    </td>
-    <td id="td2Fall"><button id="tempButton">Class2</button></td>
-    <td id="td2Fall"><button id="tempButton">Class3</button></td>
-    <td id="td2Fall"><button id="tempButton">Class4</button></td>
-    <td id="td2Fall"><button id="tempButton">Class5</button></td>
-  </tr>
-  <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-  </tr>
-
-</table>
-<table id="table2" style="width:100%">
-  <tr id="tr2">
-    <p id="t">Year 2</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
-  
-  <tr id="tr2">
-    <td id="td2Fall"><button id="tempButton">Class2</button></td>
-    <td id="td2Fall"><button id="tempButton">Class2</button></td>
-    <td id="td2Fall"><button id="tempButton">Class3</button></td>
-    <td id="td2Fall"><button id="tempButton">Class4</button></td>
-    <td id="td2Fall"><button id="tempButton">Class5</button></td>
-  </tr>
-  <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-  </tr>
-  
-</table>
-<table id="table2" style="width:100%">
-  <tr id="tr2">
-    <p id="t">Year 3</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
- 
-  <tr id="tr2">
-    <td id="td2Fall"><button id="tempButton">Class2</button></td>
-    <td id="td2Fall"><button id="tempButton">Class2</button></td>
-    <td id="td2Fall"><button id="tempButton">Class3</button></td>
-    <td id="td2Fall"><button id="tempButton">Class4</button></td>
-    <td id="td2Fall"><button id="tempButton">Class5</button></td>
-  </tr>
-   <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-  </tr>
-  
-</table>
-
-<table id="table2" style="width:100%">
-  <tr id="tr2">
-    <p id="t">Year 4</p>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-    <th id="th2"></th>
-  </tr>
-  <tr id="tr2">
-    <td id="td2Fall"><button id="tempButton">Class2</button></td>
-    <td id="td2Fall"><button id="tempButton">Class2</button></td>
-    <td id="td2Fall"><button id="tempButton">Class3</button></td>
-    <td id="td2Fall"><button id="tempButton">Class4</button></td>
-    <td id="td2Fall"><button id="tempButton">Class5</button></td>
-  </tr>
-  <th id="th2">January: </th>
-  <tr id="tr2">
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-    <td id="td2"><button id="tempButtonS">Class1</button></td>
-  </tr>
-  
-</table>
- -->
 
  <script src="script.js"> </script>
 

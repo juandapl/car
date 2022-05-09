@@ -11,14 +11,14 @@
 </head>
 <body>
 <div id="banner">
-	<a id="none" href="main.html"><h2> NYU ABU DHABI </h2> </a>
+	<a id="none" href="main"><h2> NYU ABU DHABI </h2> </a>
 </div>
 <p id="f1"> To generate a Four-year plan: </p>
-	<p id="inst">1. Input your major/minor </br>
-	2. Input your previous courses </br>
+	<p id="inst">1. Input <a href="/main">your major/minor</a> </br>
+	2. Input your <a href="/search">previous courses</a> </br>
 3. Click the generate button </br>
 </p>
-<button  id="gen"> Generate </button>
+<button  id="gen" onclick="generate()"> Generate </button>
 
 <!-- table: request using ajax - template on plan.html -->
 <div id="plan">
@@ -34,14 +34,14 @@
     
     <tr id="tr2">
       {%for course in terms[(i*4)]['courses']%}
-      <td id="td2Fall"><button id="tempButton"> <span id="info">{{course['reg']}}</span>    {{course['courseID']}} {{course['name']}}</button> <button id="remove" onclick="removeCourse(this)">remove</button></td>
+      <td id="td2Fall"><button id="tempButton"> <span id="in">{{course['reg']}}</span>    {{course['courseID']}} {{course['name']}}</button> <button id="remove" onclick="removeCourse(this)">remove</button></td>
       {%endfor%}
     </tr>
-    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%}  <span id="info">{{course['reg']}}</span> {{course['courseID']}} {{course['name']}} {%endfor%} <button id="remove" onclick="removeCourse(this)">remove</button></th>
+    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%}  <span id="in">{{course['reg']}}</span> {{course['courseID']}} {{course['name']}} {%endfor%} <button id="remove" onclick="removeCourse(this)">remove</button></th>
     
     <tr id="tr2">
       {%for course in terms[(i*4+2)]['courses']%}
-    <td id="td2"><button id="tempButtonS"> <span id="info">{{course['reg']}}</span> {{course['courseID']}} {{course['name']}}</button> <button id="remove" onclick="removeCourse(this)">remove</button></td>
+    <td id="td2"><button id="tempButtonS"> <span id="in">{{course['reg']}}</span> {{course['courseID']}} {{course['name']}}</button> <button id="remove" onclick="removeCourse(this)">remove</button></td>
       {%endfor%}
 
     </tr>

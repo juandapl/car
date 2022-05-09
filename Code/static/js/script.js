@@ -59,3 +59,4 @@ back.addEventListener('click', event => {
 	back.style.display="none";
 	
 })
+
