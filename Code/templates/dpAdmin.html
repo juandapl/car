@@ -5,28 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="style.css"/> 
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"/>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
 <div id="banner">
-	<a id="none" href="main.html"><h2> NYU ABU DHABI </h2> </a>
+	<a id="none" href="main"><h2> NYU ABU DHABI </h2> </a>
 </div>
 <!-- Table -->
 
-
+<div style="margin-top: 10%">
 <label id="nmn" for="newMajorName">New Major Name</label>
 <input id="newMajorName">
 <button id="addMajor" id="submit" onclick="addMajor(this)">Add Major</button>
+
+<datalist id="codes">
+  {% for c in all_codes %}
+      <option>{{c}}</option>
+  {% endfor %}
+</datalist>
 
 {% for major in majors %}
 <table id="adminTable">
   <tr id="adminHeading">
     <th id="th4">{{major['name']}}</th>
     <th id="th41">
-      <label id="nrn" for="newRequirement">Requirement Name</label>
-      <input id="newRequirement">
+      <label id="nrn" for="newRequirement">Requirement Code</label>
+      <input id="newRequirement" list="codes" placeholder="Start typing...">
       <button id="addRequirement" id="submit" onclick="addReq(this)">Add Requirement</button>
     </th>
   </tr>
@@ -35,15 +42,15 @@
     <tr id="adminContent">
       <td id="td4">{{req['name']}}</td>
       <td id="td41">
-        <label id="nrn" for="newPreReq">Prerequisite Name</label>
-        <input id="newPreReq">
+        <label id="nrn" for="newPreReq">Prerequisite Code</label>
+        <input id="newPreReq" list="codes" placeholder="Start typing...">
         <button id="addRequirement" id="submit" onclick="addPreReq(this)">Add Prerequisite</button>
       </td>
     </tr>
 
-    {%for pre in major['prereqs']%}
+    {%for pre in req['prereqs']%}
       <tr id="adminContent">
-        <td id="td4">{{prereq['name']}}</td>
+        <td id="td4">{{pre}}</td>
         <td id="td41">
         </td>
       </tr>
@@ -64,6 +71,7 @@
 
 
 <script src="{{url_for('static', filename='js/majors.js')}}"></script>
+<div>
 
 </body>
 </html>

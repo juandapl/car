@@ -34,14 +34,14 @@
     
     <tr id="tr2">
       {%for course in terms[(i*4)]['courses']%}
-      <td id="td2Fall"><button id="tempButton">{{course['courseID']}} {{course['name']}}</button></td>
+      <td id="td2Fall"><button id="tempButton"> <span id="info">{{course['reg']}}</span>    {{course['courseID']}} {{course['name']}}</button> <button id="remove" onclick="removeCourse(this)">remove</button></td>
       {%endfor%}
     </tr>
-    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%} {{course['courseID']}} {{course['name']}} {%endfor%}</th>
+    <th id="th2">January: {%for course in terms[(i*4)+1]['courses']%}  <span id="info">{{course['reg']}}</span> {{course['courseID']}} {{course['name']}} {%endfor%} <button id="remove" onclick="removeCourse(this)">remove</button></th>
     
     <tr id="tr2">
       {%for course in terms[(i*4+2)]['courses']%}
-    <td id="td2"><button id="tempButtonS">{{course['courseID']}} {{course['name']}}</button></td>
+    <td id="td2"><button id="tempButtonS"> <span id="info">{{course['reg']}}</span> {{course['courseID']}} {{course['name']}}</button> <button id="remove" onclick="removeCourse(this)">remove</button></td>
       {%endfor%}
 
     </tr>
@@ -54,6 +54,7 @@
 <button  id="back"> back </button>  
 
  <script src="{{url_for('static', filename = 'js/script.js')}}"> </script>
+ <script src="{{url_for('static', filename='js/addtoplan.js')}}"></script>
 
 
 </body>

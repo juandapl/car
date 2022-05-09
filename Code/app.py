@@ -19,6 +19,21 @@ db = firebase.database()
 
 fyp = FourYearPlan("2020")
 majors = []
+abu_dhabi_courses = []
+
+print("Getting all subject data")
+
+# for s in abu_dhabi_subjects:    
+#     abu_dhabi_courses += get_all_subjects("2022","sp","UH",s)
+
+# all_abu_dhabi_course_codes = []
+# for c in abu_dhabi_courses:
+#     all_abu_dhabi_course_codes.append(c['subjectCode']['code']+"-"+c['subjectCode']['school']+" "+c["deptCourseId"])
+
+
+# print(all_abu_dhabi_course_codes)
+print("Initialisation done")
+
 
 @app.route("/")
 def initialise():
@@ -27,18 +42,19 @@ def initialise():
             return redirect('/main')
     except:
         pass
-    return render_template("loginpage.html")
+    return render_template("login.html")
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
-    email = request.form["email"]
-    password = request.form['password']
-    try:
-        user = auth.sign_in_with_email_and_password(email,password)
-        session['user'] = user['idToken']
-    except:
-        return redirect("/")
-    return redirect("/main")
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form['password']
+        try:
+            user = auth.sign_in_with_email_and_password(email,password)
+            session['user'] = user['idToken']
+        except:
+            return redirect("/")
+        return redirect("/main")
 
 @app.route("/main")
 def index():
@@ -82,6 +98,19 @@ def addCourse():
             return "success"
         return "failure"
 
+@app.route("/removeCourse", methods=["GET", "POST"])
+def removeCourse():
+    if request.method == "POST":
+        form = request.form
+        reg = form['reg']
+        for term in fyp.terms:
+            for c in term.courses:
+                if c.reg_number == reg:
+                    term.courses.remove(c)
+                    term.credits -= 4
+                    break
+                break
+
 @app.route("/fyp")
 def fouryearplanpage():
     return render_template("fouryear.html", terms = [v.as_dict() for v in fyp.terms])
@@ -92,7 +121,7 @@ def generatefyp():
 
 @app.route("/admin")
 def adminConsole():
-    return render_template("dpAdmin.html", majors = majors)
+    return render_template("dpAdmin.html", majors = majors) #TODO add ad course codes
 
 @app.route("/addMajor", methods=["GET", "POST"])
 def addDegree():
@@ -105,6 +134,8 @@ def addDegree():
 def addReq():
     if request.method == "POST":
         name = request.form['name']
+        # if not name in all_abu_dhabi_course_codes:
+        #     return "fail." TODO
         major = request.form['major']
         for maj in majors:
             if maj.name == major:
@@ -112,15 +143,17 @@ def addReq():
                 break
         return "success"
 
-@app.route("/addMajor", methods=["GET", "POST"])
-def addMajor():
+@app.route("/addPreReq", methods=["GET", "POST"])
+def addPR():
     if request.method == "POST":
         name = request.form['name']
+        # if not name in all_abu_dhabi_course_codes:
+        #     return "fail." TODO
         cl = request.form['class']
         major = request.form['major']
         for maj in majors:
             if maj.name == major:
-                for c in major.requirements:
+                for c in maj.requirements:
                     if c.name == cl:
                         c.addPreReq(name)
                 break

@@ -1,4 +1,6 @@
 
+
+
 class Course:
     def __init__(self, name, course_id, reg_number, section, professor, location, semester):
         self.name = name
@@ -12,7 +14,8 @@ class Course:
     def as_dict(self):
         return {
             "name": self.name,
-            "courseID": self.course_id
+            "courseID": self.course_id,
+            "reg": self.reg_number
         }
 
 
@@ -73,7 +76,7 @@ class Student:
 class Degree:
     def __init__(self, name):
         self.name = name
-        self.requirements = [Requirement("CDAD"), Requirement("CCEA"), Requirement("CSTS"), Requirement("CADT"), Requirement("CCOL"), Requirement("CCOL")]
+        self.requirements = [Requirement("CDAD"), Requirement("CCEA"), Requirement("CSTS"), Requirement("CADT"), Requirement("CCOL"), Requirement("CCOL"), Requirement("WRIT")]
     def addRequirement(self, requirement):
         self.requirements.append(requirement)
     def as_dict(self):

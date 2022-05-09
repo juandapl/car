@@ -12,10 +12,10 @@ school = "UH"
 allsubjects = requests.get(base_url+"subjects")
 abu_dhabi_subjects = allsubjects.json()[school]
 
-# def get_all_subjects(year,semester,school):
-#     abu_dhabi_courses  = {}
-#     abu_dhabi_courses[subject] = requests.get("https://schedge.a1liu.com/"+year+"/"+semester+"/"+school+"/"+subject+"/").json()
-#     return abu_dhabi_courses
+def get_all_subjects(year,semester,school,subject):
+    abu_dhabi_courses = requests.get("https://schedge.a1liu.com/"+year+"/"+semester+"/"+school+"/"+subject).json()
+    return abu_dhabi_courses
+
 
 def subject_search(year,semester,school,subject):
     return requests.get("https://schedge.a1liu.com/"+year+"/"+semester+"/"+school+"/"+subject+"/").json()
@@ -55,5 +55,4 @@ def getMeetingTimes(section):
         time = init_time.strftime("%H:%M") +"-"+ final_time.strftime("%H:%M")
         return time
     return "TBD"
-
 

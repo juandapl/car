@@ -19,7 +19,11 @@ function addReq(thing)
 {
     console.log("adding major")
     var ClassName = thing.parentElement.querySelector("#newRequirement").value
-    var MajorName = thing.parentElement.parentElement.querySelector("#th4").value
+    var MajorName = thing.parentElement.parentElement.querySelector("#th4").textContent
+    
+    
+    console.log(MajorName)
+
 
     var request = {
         name : ClassName,
@@ -38,8 +42,8 @@ function addPreReq(thing)
 {
     console.log("adding major")
     var PreReqName = thing.parentElement.querySelector("#newPreReq").value
-    var ClassName = thing.parentElement.parentElement.querySelector("#td4").value
-    var MajorName = thing.parentElement.parentElement.parentElement.querySelector("#th4").value
+    var ClassName = thing.parentElement.parentElement.querySelector("#td4").textContent
+    var MajorName = thing.parentElement.parentElement.parentElement.querySelector("#th4").textContent
 
 
     var request = {
@@ -55,4 +59,29 @@ function addPreReq(thing)
     }
     )
 }
+
+//TODO
+
+function deleteReq(thing)
+{
+    console.log("deleting major")
+    var ClassName = thing.parentElement.querySelector("#newRequirement").value
+    var MajorName = thing.parentElement.parentElement.querySelector("#th4").textContent
+
+    var request = {
+        name : ClassName,
+        major : MajorName
+    }
+        console.log(request)
+    $.post("/removeClass", request, function(data)
+    {
+        console.log(data)
+        location.reload(); 
+    }
+    )
+}
+
+
+
+function deletePreReq(thing):
 
