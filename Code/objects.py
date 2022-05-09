@@ -73,12 +73,25 @@ class Student:
 class Degree:
     def __init__(self, name):
         self.name = name
-        self.requirements = ["CDAD", "CSTS", "CCEA", "CADT", "CCOL", "CCOL"]
+        self.requirements = [Requirement("CDAD"), Requirement("CCEA"), Requirement("CSTS"), Requirement("CADT"), Requirement("CCOL"), Requirement("CCOL")]
     def addRequirement(self, requirement):
         self.requirements.append(requirement)
+    def as_dict(self):
+        return {
+            "requirements": [v.as_dict() for v in self.requirements],
+            "name": self.name
+        }
 
-class Requirement(Degree):
-    def __init__(self, name, course_id):
-        super(self, name)
-        self.course_id = course_id
+
+class Requirement():
+    def __init__(self, course_id):
+        self.name = course_id
+        self.prereqs = []
+    def addPreReq(self, requirement):
+        self.prereqs.append(requirement)
+    def as_dict(self):
+        return {
+            "prereqs": self.prereqs,
+            "course_id": self.name
+        }
 

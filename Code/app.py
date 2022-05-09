@@ -18,6 +18,7 @@ auth = firebase.auth()
 db = firebase.database()
 
 fyp = FourYearPlan("2020")
+majors = []
 
 @app.route("/")
 def initialise():
@@ -88,3 +89,40 @@ def fouryearplanpage():
 @app.route("/generatefyp")
 def generatefyp():
     return render_template("fypreport.html", fyp = session['fyp'])
+
+@app.route("/admin")
+def adminConsole():
+    return render_template("dpAdmin.html", majors = majors)
+
+@app.route("/addMajor", methods=["GET", "POST"])
+def addDegree():
+    if request.method == "POST":
+        name = request.form['name']
+        majors.append(Degree(name))
+        return "success"
+
+@app.route("/addClass", methods=["GET", "POST"])
+def addReq():
+    if request.method == "POST":
+        name = request.form['name']
+        major = request.form['major']
+        for maj in majors:
+            if maj.name == major:
+                maj.addRequirement(Requirement(name))
+                break
+        return "success"
+
+@app.route("/addMajor", methods=["GET", "POST"])
+def addMajor():
+    if request.method == "POST":
+        name = request.form['name']
+        cl = request.form['class']
+        major = request.form['major']
+        for maj in majors:
+            if maj.name == major:
+                for c in major.requirements:
+                    if c.name == cl:
+                        c.addPreReq(name)
+                break
+        return "success"
+

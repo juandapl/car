@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="style.css"/> 
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <div id="banner">
@@ -15,24 +17,42 @@
 
 <label id="nmn" for="newMajorName">New Major Name</label>
 <input id="newMajorName">
-<button id="addMajor" id="submit">Add Major</button>
+<button id="addMajor" id="submit" onclick="addMajor(this)">Add Major</button>
 
 {% for major in majors %}
 <table id="adminTable">
   <tr id="adminHeading">
-    <th id="th4">Computer Science</th>
+    <th id="th4">{{major['name']}}</th>
     <th id="th41">
       <label id="nrn" for="newRequirement">Requirement Name</label>
       <input id="newRequirement">
-      <button id="addRequirement" id="submit">Add Requirement</button>
+      <button id="addRequirement" id="submit" onclick="addReq(this)">Add Requirement</button>
     </th>
   </tr>
 
   {%for req in major['requirements'] %}
-  <tr id="adminContent">
-    <td id="td4">Req 1</td>
-    <td id="td41"><button id="editcourse">Edit</button></td>
-  </tr>
+    <tr id="adminContent">
+      <td id="td4">{{req['name']}}</td>
+      <td id="td41">
+        <label id="nrn" for="newPreReq">Prerequisite Name</label>
+        <input id="newPreReq">
+        <button id="addRequirement" id="submit" onclick="addPreReq(this)">Add Prerequisite</button>
+      </td>
+    </tr>
+
+    {%for pre in major['prereqs']%}
+      <tr id="adminContent">
+        <td id="td4">{{prereq['name']}}</td>
+        <td id="td41">
+        </td>
+      </tr>
+
+
+    {%endfor%}
+
+
+
+  {%endfor%}
   
 </table>
 
@@ -42,7 +62,7 @@
 
 
 
-
+<script src="{{url_for('static', filename='js/majors.js')}}"></script>
 
 </body>
 </html>
